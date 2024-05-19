@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tripvibe.tripvibebe.domain.Member;
+import tripvibe.tripvibebe.dto.MemberDTO;
 import tripvibe.tripvibebe.repository.MemberRepository;
-import tripvibe.tripvibebe.repository.MemberRepositoryImpl;
 
 import java.util.List;
 
@@ -15,6 +15,8 @@ import java.util.List;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+//    private final MemberRepositoryImpl memberRepositoryImpl;
+
 
     //회원 정보 수정
     @Transactional
@@ -43,17 +45,13 @@ public class MemberService {
         }
     }
 
-}
-
-    private final MemberRepositoryImpl memberRepositoryImpl;
-
     /**
-     * 회원가입
+     * 회원가입검증 후 저장
      */
     @Transactional(readOnly = false)
     public Long join(Member member) {
         validateDuplicateMember(member);
-        memberRepositoryImpl.save(member);
+        memberRepository.save(member);
 
         return member.getId();
     }
@@ -62,22 +60,22 @@ public class MemberService {
      * 회원 전체 조회
      */
     public List<Member> findMembers() {
-        return memberRepositoryImpl.findAll();
+        return memberRepository.findAll();
     }
 
     /**
      * 회원 단건 조회
      */
-    public Member findOne(Long memberId) {
-        return memberRepositoryImpl.findOne(memberId);
-    }
+//    public Member findOne(Long memberId) {
+//        return memberRepository.findOne(memberId);
+//    }
 
 
 
 
     // 중복 회원 검증 메서드
     private void validateDuplicateMember(Member member) {
-        List<Member> findMembers = memberRepositoryImpl.findByName(member.getUsername());// 같은 이름이 있는지 찾아봄
+        List<Member> findMembers = memberRepository.findByUsername(member.getUsername());// 같은 이름이 있는지 찾아봄
         if (!findMembers.isEmpty()) {
             throw new IllegalStateException("이미 있는 아이디임");
         }
@@ -85,5 +83,11 @@ public class MemberService {
 
 
 }
+
+
+
+
+
+
 
 

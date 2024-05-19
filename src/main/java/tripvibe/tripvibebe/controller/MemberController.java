@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import tripvibe.tripvibebe.domain.Member;
+import tripvibe.tripvibebe.dto.MemberDTO;
 import tripvibe.tripvibebe.service.MemberService;
 
 import java.time.LocalDate;
@@ -22,28 +23,34 @@ public class MemberController {
         memberService.updateMember(dto);
     }
 
-    private final MemberService memberService;
-
 
     /**
      * 회원가입
      * @param request DTO
      */
     @PostMapping("/tripvibe/signup")
-    public CreateMemberResponce saveMember(@RequestBody @Validated CreateMemberRequest request) {
+    public CreateMemberResponce saveMember(@RequestBody @Validated MemberDTO memberDTO) {
 
         // 묶어도됨
-        Member member = new Member();
-        member.setUsername(request.getUsername());
-        member.setPw(request.getPw());
-        member.setPhone(request.getPhone());
-        member.setEmail(request.getEmail());
-        member.setBirth(request.getBirth());
-        member.setGender(request.getGender());
-        member.setMbti(request.getMbti());
+        Member member = getMember(memberDTO);
 
         Long id = memberService.join(member);
         return new CreateMemberResponce(id);
+    }
+
+    /**
+     * 회원 세팅 메서드. 회원 정보 전부 세팅
+     */
+    private Member getMember(MemberDTO memberDTO) {
+        Member member = new Member();
+        member.setUsername(memberDTO.getUsername());
+        member.setPw(memberDTO.getPw());
+        member.setPhone(memberDTO.getPhone());
+        member.setEmail(memberDTO.getEmail());
+        member.setBirth(memberDTO.getBirth());
+        member.setGender(memberDTO.getGender());
+        member.setMbti(memberDTO.getMbti());
+        return member;
     }
 
     //    @PostMapping("/tripvibe/signup") // 변경
@@ -52,27 +59,6 @@ public class MemberController {
 //        return new CreateMemberResponce(id);
 //    }
 
-
-    /**
-     * dto
-      */
-    @Data
-    static class CreateMemberRequest {
-        // @NotEmpty
-        private String username;
-
-        private String pw;
-
-        private String email;
-
-        private String phone;
-
-        private LocalDate birth;
-
-        private String gender;
-
-        private String mbti;
-    }
 
     @Data
     static class CreateMemberResponce {
