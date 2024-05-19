@@ -15,7 +15,6 @@ import java.util.List;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-//    private final MemberRepositoryImpl memberRepositoryImpl;
 
 
     //회원 정보 수정
