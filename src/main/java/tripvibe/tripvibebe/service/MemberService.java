@@ -10,8 +10,8 @@ import tripvibe.tripvibebe.repository.MemberRepository;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MemberService {
 
     private final MemberRepository memberRepository;
@@ -19,7 +19,7 @@ public class MemberService {
 
 
     //회원 정보 수정
-    @Transactional
+    @Transactional(readOnly = false)
     public void updateMember(MemberDTO dto) {//3
         //1. 회원 존재 여부 체크
         Member member = memberRepository.findById(dto.getId()).orElseThrow(IllegalArgumentException::new);
