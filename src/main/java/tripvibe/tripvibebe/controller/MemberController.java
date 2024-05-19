@@ -3,9 +3,7 @@ package tripvibe.tripvibebe.controller;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tripvibe.tripvibebe.domain.Member;
 import tripvibe.tripvibebe.service.MemberService;
 
@@ -15,6 +13,14 @@ import java.time.LocalDate;
 @RestController
 @RequiredArgsConstructor
 public class MemberController {
+
+    private final MemberService memberService;
+
+    @PutMapping("/mypage/{id}")
+    public void updateMember(@PathVariable Long id, @RequestBody MemberDTO dto) {
+        dto.setId(id);
+        memberService.updateMember(dto);
+    }
 
     private final MemberService memberService;
 
