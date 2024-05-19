@@ -1,4 +1,7 @@
 package tripvibe.tripvibebe.repository;
 
-public interface MemberRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import tripvibe.tripvibebe.domain.Member;
+
+public interface MemberRepository extends JpaRepository<Member,Long> {
 }
