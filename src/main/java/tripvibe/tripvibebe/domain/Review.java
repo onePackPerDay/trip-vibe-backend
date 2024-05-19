@@ -1,4 +1,4 @@
-package domain;
+package tripvibe.tripvibebe.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -30,6 +30,6 @@ public class Review {
     private LocalDate createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "member_id")
+    private Member member;
 }

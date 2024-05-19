@@ -1,4 +1,4 @@
-package domain;
+package tripvibe.tripvibebe.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -11,11 +11,11 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class User {
+public class Member {
 
     @Id //primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) //기본 키 값을 자동으로 생성
-    @Column(name = "user_id")
+    @Column(name = "member_id")
     private  Long id;
 
     @Column(nullable = false)
@@ -34,7 +34,7 @@ public class User {
 
     private String mbti;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
 
 }
