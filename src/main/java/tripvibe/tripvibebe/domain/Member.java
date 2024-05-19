@@ -18,10 +18,10 @@ public class Member {
     @Column(name = "member_id")
     private  Long id;
 
-    @Column(nullable = false)
-    private  String username;
+    @Column(nullable = false) // 변경 @NotNull
+    private String username;
 
-    @Column(nullable = false)
+    @Column(nullable = false) // 변경 @NotNull
     private String pw;
 
     private String email;
