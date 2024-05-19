@@ -31,7 +31,6 @@ public class MemberController {
     @PostMapping("/tripvibe/signup")
     public CreateMemberResponce saveMember(@RequestBody @Validated MemberDTO memberDTO) {
 
-        // 묶어도됨
         Member member = getMember(memberDTO);
 
         Long id = memberService.join(member);
