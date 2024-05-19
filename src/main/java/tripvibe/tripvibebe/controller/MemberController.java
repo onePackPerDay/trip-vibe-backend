@@ -26,7 +26,7 @@ public class MemberController {
 
     /**
      * 회원가입
-     * @param request DTO
+     * @param memberDTO DTO
      */
     @PostMapping("/tripvibe/signup")
     public CreateMemberResponce saveMember(@RequestBody @Validated MemberDTO memberDTO) {
@@ -51,13 +51,6 @@ public class MemberController {
         member.setMbti(memberDTO.getMbti());
         return member;
     }
-
-    //    @PostMapping("/tripvibe/signup") // 변경
-//    public CreateMemberResponce saveMember2(@RequestBody @Validated Member member) {
-//        Long id = memberService.join(member);
-//        return new CreateMemberResponce(id);
-//    }
-
 
     @Data
     static class CreateMemberResponce {
