@@ -3,6 +3,7 @@ package tripvibe.tripvibebe.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import tripvibe.tripvibebe.role.Role;
 
 import java.time.LocalDate;
 
@@ -24,5 +25,6 @@ public class MemberFormDTO {
     private String gender;
 
     private String mbti;
+
 
 }
