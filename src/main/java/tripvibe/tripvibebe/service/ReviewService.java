@@ -21,15 +21,17 @@ import java.util.stream.Collectors;
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
-    private final ObjectMapper jacksonObjectMapper;
 
     //리뷰 목록 (main)
     @Transactional(readOnly = true)
-    public List<ReviewDTO> getReviews() {
+    public List<ReviewDTO> getReviewList() {
         //모든 리뷰 데이터를 가져와서 dto로 변환 후, 리스트로 만들어서 반환
         return reviewRepository.findAll()
                 .stream()
-                .map(review -> new ReviewDTO(review))
+                .map(review -> {
+                    //review.setImgName("C:/fullstack/image/"+review.getImgName());
+                    return new ReviewDTO(review);
+                })
                 .collect(Collectors.toList());
     }
 
@@ -44,7 +46,6 @@ public class ReviewService {
     @Transactional
     public void saveReview(MultipartFile img, String stringReview) throws Exception {
         Review review = new ObjectMapper().readValue(stringReview, Review.class); //Json 문자열을 Review에 매핑
-
 
         //sfsdfsf.txt
         String path = "C:/fullstack/image/"; //이미지를 저장할 서버 주소

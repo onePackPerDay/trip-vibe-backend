@@ -20,8 +20,8 @@ public class ReviewController {
 
     //리뷰 목록 조회 (main)
     @GetMapping("/tripvibe/reviewlist")
-    public List<ReviewDTO> getReviews() {
-        return reviewService.getReviews();
+    public List<ReviewDTO> getReviewList() {
+        return reviewService.getReviewList();
     }
 
     //리뷰 1개 조회
@@ -30,7 +30,7 @@ public class ReviewController {
         return reviewService.getReviewOne(id);
     }
 
-    //리뷰 등록   { "/title"/ : "/제목"/, content: "내용}
+    //리뷰 등록
     @PostMapping("/tripvibe/review")
     public void saveReview(@RequestParam MultipartFile img, @RequestParam("review") String stringReview) throws Exception {
         reviewService.saveReview(img, stringReview);
