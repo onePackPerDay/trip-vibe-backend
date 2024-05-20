@@ -33,6 +33,7 @@ public class MemberController {
 
     /**
      * 회원가입
+     *
      * @param memberDTO DTO
      */
     @PostMapping("/tripvibe/signup")
@@ -67,6 +68,5 @@ public class MemberController {
             this.id = id;
         }
     }
-
 
 }
