@@ -13,6 +13,7 @@ public class Review {
 
     @Id //primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) //기본 키 값을 자동으로 생성
+    @Column(name = "review_id")
     private  Long id;
 
     @Column(nullable = false)

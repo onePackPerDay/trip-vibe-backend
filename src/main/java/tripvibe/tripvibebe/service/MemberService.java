@@ -10,12 +10,11 @@ import tripvibe.tripvibebe.repository.MemberRepository;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class MemberService {
 
     private final MemberRepository memberRepository;
-
 
     //회원 정보 수정
     @Transactional(readOnly = false)
@@ -42,6 +41,12 @@ public class MemberService {
         if (dto.getMbti() != null){
             member.updateMbti(dto.getMbti());
         }
+    }
+
+    //회원 1명 조회
+    public MemberDTO getMemberOne(Long id) {
+        Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        return new MemberDTO(member);
     }
 
     /**
