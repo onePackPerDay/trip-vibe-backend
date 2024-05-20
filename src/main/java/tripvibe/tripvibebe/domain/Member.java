@@ -37,27 +37,4 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
 
-    public void updateUsername(String username) {
-        this.username = username;
-    }
-
-    public void updatePw(String pw) {
-        this.pw = pw;
-    }
-
-    public void updatePhone(String phone) {
-        this.phone = phone;
-    }
-
-    public void updateEmail(String email) {
-        this.email = email;
-    }
-
-    public void updateMbti(String mbti) {
-        this.mbti = mbti;
-    }
-
-    public void updateGender(String gender) {
-        this.gender = gender;
-    }
 }

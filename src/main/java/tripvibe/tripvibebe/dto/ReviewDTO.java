@@ -2,11 +2,13 @@ package tripvibe.tripvibebe.dto;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import tripvibe.tripvibebe.domain.Review;
 
 import java.time.LocalDate;
 
+@Getter
 public class ReviewDTO {
 
     private  Long id;
@@ -21,6 +23,7 @@ public class ReviewDTO {
 
     private LocalDate createdDate;
 
+    //Review Entity -> ReviewDTO
     public ReviewDTO(Review review) {
         this.id = review.getId();
         this.title = review.getTitle();
