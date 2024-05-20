@@ -1,13 +1,19 @@
 package tripvibe.tripvibebe.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import tripvibe.tripvibebe.domain.Review;
 import tripvibe.tripvibebe.dto.ReviewDTO;
 import tripvibe.tripvibebe.repository.ReviewRepository;
 
+import java.io.File;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -15,8 +21,9 @@ import java.util.stream.Collectors;
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
+    private final ObjectMapper jacksonObjectMapper;
 
-   //리뷰 목록 (main)
+    //리뷰 목록 (main)
     @Transactional(readOnly = true)
     public List<ReviewDTO> getReviews() {
         //모든 리뷰 데이터를 가져와서 dto로 변환 후, 리스트로 만들어서 반환
@@ -35,8 +42,19 @@ public class ReviewService {
 
     //리뷰 등록
     @Transactional
-    public void saveReview(ReviewDTO dto){
-        reviewRepository.save(new Review(dto));
+    public void saveReview(MultipartFile img, String stringReview) throws Exception {
+        Review review = new ObjectMapper().readValue(stringReview, Review.class); //Json 문자열을 Review에 매핑
+
+
+        //sfsdfsf.txt
+        String path = "C:/fullstack/image/"; //이미지를 저장할 서버 주소
+        String originalImgName = img.getOriginalFilename(); //파일 원본 이름
+        String extension = originalImgName.substring(originalImgName.indexOf(".")); //확장자
+        String newImgName = UUID.randomUUID().toString() + extension; //서버에 저장할 새 파일 이름
+        img.transferTo(new File(path+newImgName)); //지정된 경로를 가진 File 객체 생성
+
+        review.setImgName(newImgName);
+        reviewRepository.save(review);
     }
 
     //리뷰 수정
@@ -50,9 +68,9 @@ public class ReviewService {
         if(dto.getContent() != null){
             review.setContent(dto.getContent());
         }
-        if (dto.getImg() != null){
-            review.setImg(dto.getImg());
-        }
+//        if (dto.getImg() != null){
+//            review.setImg(dto.getImg());
+//        }
         review.setCreatedDate(dto.getCreatedDate());
     }
 
