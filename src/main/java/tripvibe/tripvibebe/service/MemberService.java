@@ -68,15 +68,6 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
-    /**
-     * 회원 단건 조회
-     */
-//    public Member findOne(Long memberId) {
-//        return memberRepository.findOne(memberId);
-//    }
-
-
-
 
     // 중복 회원 검증 메서드
     private void validateDuplicateMember(Member member) {
