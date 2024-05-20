@@ -10,23 +10,29 @@ import tripvibe.tripvibebe.service.MemberService;
 
 import java.time.LocalDate;
 
-//  MemberApiController
 @RestController
 @RequiredArgsConstructor
 public class MemberController {
 
     private final MemberService memberService;
 
-    @PutMapping("/mypage/{id}")
+    //회원 정보 수정
+    @PutMapping("/tripvibe/mypage/{id}")
     public void updateMember(@PathVariable Long id, @RequestBody MemberDTO dto) {
         dto.setId(id);
         memberService.updateMember(dto);
     }
 
+    //회원 1명 조회
+    @GetMapping("/tripvibe/mypage/{id}")
+    public MemberDTO getMemberOne(@PathVariable Long id) {
+        return memberService.getMemberOne(id);
+    }
+
 
     /**
      * 회원가입
-     * @param request DTO
+     * @param
      */
     @PostMapping("/tripvibe/signup")
     public CreateMemberResponce saveMember(@RequestBody @Validated MemberDTO memberDTO) {

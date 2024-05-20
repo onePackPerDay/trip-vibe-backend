@@ -15,8 +15,6 @@ import java.util.List;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-//    private final MemberRepositoryImpl memberRepositoryImpl;
-
 
     //회원 정보 수정
     @Transactional
@@ -43,6 +41,12 @@ public class MemberService {
         if (dto.getMbti() != null){
             member.updateMbti(dto.getMbti());
         }
+    }
+
+    //회원 1명 조회
+    public MemberDTO getMemberOne(Long id) {
+        Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        return new MemberDTO(member);
     }
 
     /**
