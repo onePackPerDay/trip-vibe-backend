@@ -22,28 +22,29 @@ public class MemberService {
         //1. 회원 존재 여부 체크
         Member member = memberRepository.findById(dto.getId()).orElseThrow(IllegalArgumentException::new);
 
-        //2. 정보 수정 (비밀번호, 이메일, 폰번호, mbti)
+        //2. 정보 수정 (이름. 비밀번호, 이메일, 폰번호, mbti)
         if(dto.getUsername() != null){
-            member.updateUsername(dto.getUsername());
+            member.setUsername(dto.getUsername());
         }
         if(dto.getPw() != null){
-            member.updatePw(dto.getPw());
+            member.setPw(dto.getUsername());
         }
         if (dto.getEmail() != null){
-            member.updateEmail(dto.getEmail());
+            member.setEmail(dto.getEmail());
         }
         if (dto.getPhone() != null){
-            member.updatePhone(dto.getPhone());
+            member.setPhone(dto.getPhone());
         }
         if (dto.getGender() != null){
-            member.updateGender(dto.getGender());
+            member.setGender(dto.getGender());
         }
         if (dto.getMbti() != null){
-            member.updateMbti(dto.getMbti());
+            member.setMbti(dto.getMbti());
         }
     }
 
     //회원 1명 조회
+    @Transactional
     public MemberDTO getMemberOne(Long id) {
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         return new MemberDTO(member);
