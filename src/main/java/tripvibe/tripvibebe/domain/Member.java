@@ -2,8 +2,6 @@ package tripvibe.tripvibebe.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import tripvibe.tripvibebe.dto.MemberFormDTO;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
