@@ -45,6 +45,7 @@ public class MemberService {
         return new MemberDTO(member);
     }
 
+    //회원 가입
     @Transactional
     public void joinMember(MemberDTO dto) {
         Member member = Member.builder() // builder를 통해 entity화 함

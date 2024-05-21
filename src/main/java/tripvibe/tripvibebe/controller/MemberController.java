@@ -11,7 +11,6 @@ import tripvibe.tripvibebe.service.MemberService;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequiredArgsConstructor
-//@RequestMapping("/api")
 public class MemberController {
 
     private final MemberService memberService;
@@ -61,14 +60,5 @@ public class MemberController {
 //        member.setMbti(memberDTO.getMbti());
 //        return member;
 //    }
-
-    @Data
-    static class CreateMemberResponce {
-        private Long id;
-
-        public CreateMemberResponce(Long id) {
-            this.id = id;
-        }
-    }
 
 }
