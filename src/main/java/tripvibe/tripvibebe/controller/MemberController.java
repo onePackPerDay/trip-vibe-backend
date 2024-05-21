@@ -1,9 +1,14 @@
 package tripvibe.tripvibebe.controller;
 
+import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import tripvibe.tripvibebe.domain.Member;
 import tripvibe.tripvibebe.dto.MemberDTO;
+import tripvibe.tripvibebe.dto.MemberFormDTO;
 import tripvibe.tripvibebe.repository.MemberRepository;
 import tripvibe.tripvibebe.service.MemberService;
 
@@ -16,6 +21,7 @@ public class MemberController {
 
     private final MemberService memberService;
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     //회원 정보 수정
     @PutMapping("/tripvibe/mypage/{id}")
@@ -36,6 +42,34 @@ public class MemberController {
     public void joinMember(MemberDTO memberDTO) {
         memberService.joinMember(memberDTO);
     }
+
+    // 새거
+    // 회원가입
+//    @PostMapping("/tripvibe/signuptest")
+//    public String joinMember(@Valid @RequestBody MemberFormDTO memberFormDTO, BindingResult bindingResult) {
+//
+//        if (bindingResult.hasErrors()) {
+//            return null;
+//        }
+//
+//        try {
+//            Member member = Member.createMember(memberFormDTO, passwordEncoder);
+//            memberService.saveMember(member);
+//            System.out.println("@@@@@@@@@@입력된거 기록되나?@@@@@@@@@@ : " + member);
+//
+//        } catch (IllegalStateException e) {
+//            return "에러남 (IllegalStateException)";
+//
+//        }
+//
+//        return "회원가입 성공";
+//    }
+
+
+//    @PostMapping("/tripvibe/signuptest")
+//    public void joinMember(Member member) {
+//        memberService.saveMember(member);
+//    }
 
 
 
@@ -68,13 +102,13 @@ public class MemberController {
 //        return member;
 //    }
 
-    @Data
-    static class CreateMemberResponce {
-        private Long id;
-
-        public CreateMemberResponce(Long id) {
-            this.id = id;
-        }
-    }
+//    @Data
+//    static class CreateMemberResponce {
+//        private Long id;
+//
+//        public CreateMemberResponce(Long id) {
+//            this.id = id;
+//        }
+//    }
 
 }
