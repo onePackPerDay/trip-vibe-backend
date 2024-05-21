@@ -49,7 +49,7 @@ public class MemberService {
     }
 
     @Transactional(readOnly = false)
-    public Long join(MemberDTO memberDTO) {
+    public void joinMember(MemberDTO memberDTO) {
         Member member = Member.builder() // builder를 통해 entity화 함
                 .username(memberDTO.getUsername())
                 .pw(memberDTO.getPw())
@@ -63,7 +63,7 @@ public class MemberService {
             throw new IllegalStateException("비밀번호 필수");
         }
 
-        return memberRepository.save(member).getId();
+//        return memberRepository.save(member).getId();
     }
 
 

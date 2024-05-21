@@ -33,8 +33,8 @@ public class MemberController {
 
     // 회원가입
     @PostMapping("/tripvibe/signup")
-    public void createMember(MemberDTO memberDTO) {
-        Long memberId = memberService.join(memberDTO);
+    public void joinMember(MemberDTO memberDTO) {
+        memberService.joinMember(memberDTO);
     }
 
 
