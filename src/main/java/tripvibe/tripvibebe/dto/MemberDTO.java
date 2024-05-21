@@ -34,7 +34,7 @@ public class MemberDTO {
 
     public MemberDTO(Member member) {
         this.id = member.getId();
-        this.username = member.getUsername();
+        this.username = member.getMemberId();
         this.pw = member.getPw();
         this.email = member.getEmail();
         this.phone = member.getPhone();
