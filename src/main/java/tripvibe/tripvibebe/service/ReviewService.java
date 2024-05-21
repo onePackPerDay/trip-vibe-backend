@@ -28,10 +28,7 @@ public class ReviewService {
         //모든 리뷰 데이터를 가져와서 dto로 변환 후, 리스트로 만들어서 반환
         return reviewRepository.findAll()
                 .stream()
-                .map(review -> {
-                    //review.setImgName("C:/fullstack/image/"+review.getImgName());
-                    return new ReviewDTO(review);
-                })
+                .map(review -> new ReviewDTO(review))
                 .collect(Collectors.toList());
     }
 

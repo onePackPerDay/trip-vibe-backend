@@ -16,16 +16,13 @@ public class MemberService {
 
     //회원 정보 수정
     @Transactional(readOnly = false)
-    public void updateMember(MemberDTO dto) {//3
-        //1. 회원 존재 여부 체크
-        Member member = memberRepository.findById(dto.getId()).orElseThrow(IllegalArgumentException::new);
+    public void updateMember(Long id, MemberDTO dto) {//member_id로 조회
+        //1. 회원 존재 여부 체크 (고유 번호로 검사)
+        Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
 
-        //2. 정보 수정 (이름. 비밀번호, 이메일, 폰번호, mbti)
-        if(dto.getUsername() != null){
-            member.setMemberId(dto.getUsername());
-        }
+        //2. 정보 수정 (비밀번호, 이메일, 폰번호, mbti)
         if(dto.getPw() != null){
-            member.setPw(dto.getUsername());
+            member.setPw(dto.getPw());
         }
         if (dto.getEmail() != null){
             member.setEmail(dto.getEmail());
@@ -43,35 +40,28 @@ public class MemberService {
 
     //회원 1명 조회
     @Transactional
-    public MemberDTO getMemberOne(Long id) {
+    public MemberDTO getMemberOne(Long id) { //고유 번호로 조회
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         return new MemberDTO(member);
     }
 
-    @Transactional(readOnly = false)
-    public void joinMember(MemberDTO memberDTO) {
+    //회원 가입
+    @Transactional
+    public void joinMember(MemberDTO dto) {
         Member member = Member.builder() // builder를 통해 entity화 함
-                .memberId(memberDTO.getUsername())
-                .pw(memberDTO.getPw())
-                .email(memberDTO.getEmail())
-                .phone(memberDTO.getPhone())
-                .birth(memberDTO.getBirth())
-                .gender(memberDTO.getGender())
-                .mbti(memberDTO.getMbti())
+                .memberId(dto.getMemberId())
+                .pw(dto.getPw())
+                .email(dto.getEmail())
+                .phone(dto.getPhone())
+                .birth(dto.getBirth())
+                .gender(dto.getGender())
+                .mbti(dto.getMbti())
                 .build();
-        if (memberDTO.getPw() == null) {
+        if (dto.getPw() == null) {
             throw new IllegalStateException("비밀번호 필수");
         }
-
-//        return memberRepository.save(member).getId();
+        memberRepository.save(member);
     }
-
-
-
-
-
-
-
 
 
 

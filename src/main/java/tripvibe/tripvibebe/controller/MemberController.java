@@ -1,5 +1,6 @@
 package tripvibe.tripvibebe.controller;
 
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -11,63 +12,29 @@ import tripvibe.tripvibebe.service.MemberService;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequiredArgsConstructor
-//@RequestMapping("/api")
 public class MemberController {
 
     private final MemberService memberService;
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    //회원 정보 수정
+    //회원 정보 수정(고유 번호로 회원 정보 불러오기)
     @PutMapping("/tripvibe/mypage/{id}")
     public void updateMember(@PathVariable Long id, @RequestBody MemberDTO dto) {
-        dto.setId(id);
-        memberService.updateMember(dto);
+        memberService.updateMember(id, dto);
     }
 
-    //회원 1명 조회
+    //회원 1명 조회 (고유 번호로 마이페이지 불러오기)
     @GetMapping("/tripvibe/mypage/{id}")
     public MemberDTO getMemberOne(@PathVariable Long id) {
-
         return memberService.getMemberOne(id);
     }
 
     // 회원가입
     @PostMapping("/tripvibe/signup")
-    public void joinMember(MemberDTO memberDTO) {
-        memberService.joinMember(memberDTO);
+    public void joinMember(@RequestBody MemberDTO dto) {
+        memberService.joinMember(dto);
     }
-
-    // 새거
-    // 회원가입
-//    @PostMapping("/tripvibe/signuptest")
-//    public String joinMember(@Valid @RequestBody MemberFormDTO memberFormDTO, BindingResult bindingResult) {
-//
-//        if (bindingResult.hasErrors()) {
-//            return null;
-//        }
-//
-//        try {
-//            Member member = Member.createMember(memberFormDTO, passwordEncoder);
-//            memberService.saveMember(member);
-//            System.out.println("@@@@@@@@@@입력된거 기록되나?@@@@@@@@@@ : " + member);
-//
-//        } catch (IllegalStateException e) {
-//            return "에러남 (IllegalStateException)";
-//
-//        }
-//
-//        return "회원가입 성공";
-//    }
-
-
-//    @PostMapping("/tripvibe/signuptest")
-//    public void joinMember(Member member) {
-//        memberService.saveMember(member);
-//    }
-
-
-
 
     /**
      * 회원가입
@@ -95,15 +62,6 @@ public class MemberController {
 //        member.setGender(memberDTO.getGender());
 //        member.setMbti(memberDTO.getMbti());
 //        return member;
-//    }
-
-//    @Data
-//    static class CreateMemberResponce {
-//        private Long id;
-//
-//        public CreateMemberResponce(Long id) {
-//            this.id = id;
-//        }
 //    }
 
 }
