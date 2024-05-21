@@ -15,30 +15,24 @@ import tripvibe.tripvibebe.service.MemberService;
 public class MemberController {
 
     private final MemberService memberService;
-    private final MemberRepository memberRepository;
 
-    //회원 정보 수정
+    //회원 정보 수정(고유 번호로 회원 정보 불러오기)
     @PutMapping("/tripvibe/mypage/{id}")
     public void updateMember(@PathVariable Long id, @RequestBody MemberDTO dto) {
-        dto.setId(id);
-        memberService.updateMember(dto);
+        memberService.updateMember(id, dto);
     }
 
-    //회원 1명 조회
+    //회원 1명 조회 (고유 번호로 마이페이지 불러오기)
     @GetMapping("/tripvibe/mypage/{id}")
     public MemberDTO getMemberOne(@PathVariable Long id) {
-
         return memberService.getMemberOne(id);
     }
 
     // 회원가입
     @PostMapping("/tripvibe/signup")
-    public void createMember(MemberDTO memberDTO) {
-        Long memberId = memberService.join(memberDTO);
+    public void joinMember(@RequestBody MemberDTO dto) {
+        memberService.joinMember(dto);
     }
-
-
-
 
     /**
      * 회원가입

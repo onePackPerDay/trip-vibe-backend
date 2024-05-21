@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class MemberDTO {
     private  Long id;
 
-    private  String username;
+    private  String memberId;
 
     private String pw;
 
@@ -31,10 +31,9 @@ public class MemberDTO {
     private String mbti;
 
 
-
     public MemberDTO(Member member) {
         this.id = member.getId();
-        this.username = member.getUsername();
+        this.memberId = member.getMemberId();
         this.pw = member.getPw();
         this.email = member.getEmail();
         this.phone = member.getPhone();

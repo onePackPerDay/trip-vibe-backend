@@ -17,8 +17,8 @@ public class Review {
 
     @Id //primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) //기본 키 값을 자동으로 생성
-    @Column(name = "review_id")
-    private  Long id;
+    @Column(name = "review_num")
+    private Long id;
 
     @Column(nullable = false)
     private  String title;
@@ -31,10 +31,11 @@ public class Review {
     @Column(nullable = false)
     private int rating;
 
+    @Column(nullable = false)
     private Date createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "account_num")
     private Member member;
 
     //ReviewDTO -> Review Entity
