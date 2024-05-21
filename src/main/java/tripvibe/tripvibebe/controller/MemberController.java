@@ -4,9 +4,12 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import tripvibe.tripvibebe.domain.Member;
 import tripvibe.tripvibebe.dto.MemberDTO;
 import tripvibe.tripvibebe.repository.MemberRepository;
 import tripvibe.tripvibebe.service.MemberService;
+
+import java.util.Optional;
 
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -35,6 +38,13 @@ public class MemberController {
     public void joinMember(@RequestBody MemberDTO dto) {
         memberService.joinMember(dto);
     }
+
+    @GetMapping("/tripvibe/signin")
+    public void loginTest() { // loginTest -> ??? 바꿔야함
+        Optional<Member> member = memberRepository.findByMemberId("moon11"); // 테스트 추후 삭제
+        System.out.println("아이디 정보떠야함 제발 : " + member.get().getMemberId()); // 테스트 추후 삭제
+    }
+
 
     /**
      * 회원가입
