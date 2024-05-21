@@ -4,12 +4,15 @@ package tripvibe.tripvibebe.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import tripvibe.tripvibebe.domain.Review;
 
 import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
+@Setter
+@NoArgsConstructor
 public class ReviewDTO {
 
     private  Long id;
@@ -33,4 +36,6 @@ public class ReviewDTO {
         this.rating = review.getRating();
         this.createdDate = review.getCreatedDate();
     }
+
+
 }

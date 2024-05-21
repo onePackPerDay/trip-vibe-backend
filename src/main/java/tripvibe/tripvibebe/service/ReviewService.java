@@ -13,6 +13,7 @@ import tripvibe.tripvibebe.repository.ReviewRepository;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -49,7 +50,7 @@ public class ReviewService {
         String originalImgName = img.getOriginalFilename(); //파일 원본 이름
         String extension = originalImgName.substring(originalImgName.indexOf(".")); //확장자
         String newImgName = UUID.randomUUID().toString() + extension; //서버에 저장할 새 파일 이름
-        img.transferTo(new File(path+newImgName)); //지정된 경로를 가진 File 객체 생성
+        img.transferTo(new File(path+newImgName)); //지정된 경로를 가진 File 객체 생성하고 서버에 업로드
 
         review.setImgName(newImgName);
         reviewRepository.save(review);
@@ -57,19 +58,27 @@ public class ReviewService {
 
     //리뷰 수정
     @Transactional
-    public void updateReview(Long id, ReviewDTO dto){
+    public void updateReview(Long id, MultipartFile img, String stringReview) throws Exception {
+        //1. 전달받은 id에 맞는 review가 있는 지 확인
         Review review = reviewRepository.findById(id).orElseThrow(IllegalArgumentException::new);
 
-        if(dto.getTitle() != null){
-            review.setTitle(dto.getTitle());
-        }
-        if(dto.getContent() != null){
-            review.setContent(dto.getContent());
-        }
-//        if (dto.getImg() != null){
-//            review.setImg(dto.getImg());
-//        }
+        //2. 전달받은 문자열 Json을 ReviewDTO 객체로 매핑
+        ReviewDTO dto = new ObjectMapper().readValue(stringReview, ReviewDTO.class);
+
+        //3. 새 이미지 서버에 저장
+        String path = "C:/fullstack/image/";
+        String originalImgName = img.getOriginalFilename(); //파일 원본 이름
+        String extension = originalImgName.substring(originalImgName.indexOf(".")); //확장자
+        String newImgName = UUID.randomUUID().toString() + extension; //서버에 저장할 새 파일 이름
+        img.transferTo(new File(path+newImgName)); //지정된 경로를 가진 File 객체 생성
+
+        //4. review 수정
+        review.setImgName(newImgName);
+        review.setTitle(dto.getTitle());
+        review.setContent(dto.getContent());
+        review.setRating(dto.getRating());
         review.setCreatedDate(dto.getCreatedDate());
+
     }
 
     //리뷰 삭제
@@ -81,6 +90,5 @@ public class ReviewService {
         //2. 리뷰 삭제
         reviewRepository.delete(review);
     }
-
 
 }

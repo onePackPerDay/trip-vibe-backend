@@ -37,9 +37,9 @@ public class ReviewController {
     }
 
     //리뷰 수정
-    @PutMapping("/trip/vibe/review/detail/{id}")
-    public void updateReview(@PathVariable Long id, @RequestBody ReviewDTO dto){
-       reviewService.updateReview(id, dto);
+    @PutMapping("/tripvibe/review/detail/{id}")
+    public void updateReview(@PathVariable Long id, @RequestParam MultipartFile img, @RequestParam("review") String stringReview) throws Exception {
+       reviewService.updateReview(id, img, stringReview);
     }
 
     //리뷰 삭제
