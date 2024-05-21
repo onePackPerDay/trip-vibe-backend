@@ -4,10 +4,12 @@ spring:
     url: jdbc:mysql://localhost:3306/tripvibedb
     username: root
     password: admin
+    hikari:
+      read-only: false
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true

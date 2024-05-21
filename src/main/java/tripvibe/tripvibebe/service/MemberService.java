@@ -7,8 +7,6 @@ import tripvibe.tripvibebe.domain.Member;
 import tripvibe.tripvibebe.dto.MemberDTO;
 import tripvibe.tripvibebe.repository.MemberRepository;
 
-import java.util.List;
-
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -50,31 +48,65 @@ public class MemberService {
         return new MemberDTO(member);
     }
 
-    /**
-     * 회원가입검증 후 저장
-     */
     @Transactional(readOnly = false)
-    public Long join(Member member) {
-        validateDuplicateMember(member);
-        memberRepository.save(member);
+    public Long join(MemberDTO memberDTO) {
+        Member member = Member.builder() // builder를 통해 entity화 함
+                .username(memberDTO.getUsername())
+                .pw(memberDTO.getPw())
+                .email(memberDTO.getEmail())
+                .phone(memberDTO.getPhone())
+                .birth(memberDTO.getBirth())
+                .gender(memberDTO.getGender())
+                .mbti(memberDTO.getMbti())
+                .build();
+        if (memberDTO.getPw() == null) {
+            throw new IllegalStateException("비밀번호 필수");
+        }
 
-        return member.getId();
+        return memberRepository.save(member).getId();
     }
+
+
+
+
+
+
+
+
+
+
+    /**
+     * 회원가입
+     */
+//    @Transactional(readOnly = false)
+//    public Long join(Member member) {
+//        validateDuplicateMember(member);
+//        memberRepository.save(member);
+//
+//        return member.getId();
+//    }
 
     /**
      * 회원 전체 조회
      */
-    public List<Member> findMembers() {
-        return memberRepository.findAll();
-    }
+//    public List<Member> findMembers() {
+//        return memberRepository.findAll();
+//    }
 
 
     // 중복 회원 검증 메서드
-    private void validateDuplicateMember(Member member) {
-        List<Member> findMembers = memberRepository.findByUsername(member.getUsername());// 같은 이름이 있는지 찾아봄
-        if (!findMembers.isEmpty()) {
-            throw new IllegalStateException("이미 있는 아이디임");
-        }
-    }
+//    private void validateDuplicateMember(Member member) {
+//        Optional<Member> findMember = memberRepository.findByUsername(member.getUsername());// 같은 이름이 있는지 찾아봄
+//        if (findMember != null) {
+//            throw new IllegalStateException("이미 있는 아이디임");
+//        }
+//    }
+
+    // 로그인
+//    public MemberDTO findBy(final MemberRequestDTO params) {
+//        MemberDTO entity = memberRepository.findByUsernameAndPw(params.getUsername(), params.getPw());
+//
+//        return entity;
+//    }
 
 }
