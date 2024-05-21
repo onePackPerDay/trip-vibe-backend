@@ -22,7 +22,7 @@ public class MemberService {
 
         //2. 정보 수정 (이름. 비밀번호, 이메일, 폰번호, mbti)
         if(dto.getUsername() != null){
-            member.setUsername(dto.getUsername());
+            member.setMemberId(dto.getUsername());
         }
         if(dto.getPw() != null){
             member.setPw(dto.getUsername());
@@ -51,7 +51,7 @@ public class MemberService {
     @Transactional(readOnly = false)
     public void joinMember(MemberDTO memberDTO) {
         Member member = Member.builder() // builder를 통해 entity화 함
-                .username(memberDTO.getUsername())
+                .memberId(memberDTO.getUsername())
                 .pw(memberDTO.getPw())
                 .email(memberDTO.getEmail())
                 .phone(memberDTO.getPhone())
