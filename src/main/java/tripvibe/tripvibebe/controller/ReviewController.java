@@ -1,10 +1,15 @@
 package tripvibe.tripvibebe.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import tripvibe.tripvibebe.domain.Review;
 import tripvibe.tripvibebe.dto.ReviewDTO;
 import tripvibe.tripvibebe.service.ReviewService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -15,8 +20,8 @@ public class ReviewController {
 
     //리뷰 목록 조회 (main)
     @GetMapping("/tripvibe/reviewlist")
-    public List<ReviewDTO> getReviews() {
-        return reviewService.getReviews();
+    public List<ReviewDTO> getReviewList() {
+        return reviewService.getReviewList();
     }
 
     //리뷰 1개 조회
@@ -27,8 +32,8 @@ public class ReviewController {
 
     //리뷰 등록
     @PostMapping("/tripvibe/review")
-    public void saveReview(@RequestBody ReviewDTO dto){
-        reviewService.saveReview(dto);
+    public void saveReview(@RequestParam MultipartFile img, @RequestParam("review") String stringReview) throws Exception {
+        reviewService.saveReview(img, stringReview);
     }
 
     //리뷰 수정

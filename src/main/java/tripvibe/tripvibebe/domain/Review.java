@@ -7,6 +7,7 @@ import lombok.Setter;
 import tripvibe.tripvibebe.dto.ReviewDTO;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -22,8 +23,7 @@ public class Review {
     @Column(nullable = false)
     private  String title;
 
-    @Lob
-    private byte[] img;
+    private String imgName;
 
     @Column(nullable = false)
     private String content;
@@ -31,7 +31,7 @@ public class Review {
     @Column(nullable = false)
     private int rating;
 
-    private LocalDate createdDate;
+    private Date createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -40,7 +40,7 @@ public class Review {
     //ReviewDTO -> Review Entity
     public Review(ReviewDTO dto) { //id는 자동 생성
         this.title = dto.getTitle();
-        this.img = dto.getImg();
+        this.imgName = dto.getImgName();
         this.content = dto.getContent();
         this.rating = dto.getRating();
         this.createdDate = dto.getCreatedDate();

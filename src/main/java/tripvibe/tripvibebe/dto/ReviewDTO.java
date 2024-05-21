@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import tripvibe.tripvibebe.domain.Review;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 public class ReviewDTO {
@@ -15,19 +16,19 @@ public class ReviewDTO {
 
     private  String title;
 
-    private byte[] img;
+    private String imgName;
 
     private String content;
 
     private int rating;
 
-    private LocalDate createdDate;
+    private Date createdDate;
 
     //Review Entity -> ReviewDTO
     public ReviewDTO(Review review) {
         this.id = review.getId();
         this.title = review.getTitle();
-        this.img = review.getImg();
+        this.imgName = review.getImgName();
         this.content = review.getContent();
         this.rating = review.getRating();
         this.createdDate = review.getCreatedDate();
