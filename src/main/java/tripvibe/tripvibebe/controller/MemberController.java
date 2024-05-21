@@ -1,14 +1,9 @@
 package tripvibe.tripvibebe.controller;
 
-import jakarta.validation.Valid;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import tripvibe.tripvibebe.domain.Member;
 import tripvibe.tripvibebe.dto.MemberDTO;
-import tripvibe.tripvibebe.dto.MemberFormDTO;
 import tripvibe.tripvibebe.repository.MemberRepository;
 import tripvibe.tripvibebe.service.MemberService;
 
