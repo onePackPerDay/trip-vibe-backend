@@ -19,7 +19,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.csrf((csrf) -> csrf.disable()); // 나중에 이거 삭제해야함
         http.authorizeHttpRequests((authorizeRequests) -> authorizeRequests
-                        .requestMatchers("/**").permitAll());  // 특정 경로를 허용
+                        .requestMatchers("/tripvibe/mypage/**").permitAll());  // 특정 경로를 허용
 
         http.formLogin((formLogin)
                 -> formLogin.loginPage("/tripvibe/signin") // 로그인 폼이 있는 페이지 url
