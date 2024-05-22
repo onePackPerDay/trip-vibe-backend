@@ -1,10 +1,8 @@
 package tripvibe.tripvibebe.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.Table;
+import lombok.*;
 import tripvibe.tripvibebe.domain.Member;
 
 import java.time.LocalDate;
@@ -41,6 +39,7 @@ public class MemberDTO {
         this.gender = member.getGender();
         this.mbti = member.getMbti();
     }
+
 
 
 }
