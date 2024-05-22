@@ -40,16 +40,16 @@ public class AuthService {
 
 
         // 비밀번호 암호화
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPw = passwordEncoder.encode(pw);
-
-        boolean isPwMatch = passwordEncoder.matches(pw, hashedPw);
-
-        if (!isPwMatch) {
-            return ResponseDTO.setFailed("암호화에 실패했어요");
-        }
-
-        member.setPw(hashedPw);
+//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//        String hashedPw = passwordEncoder.encode(pw);
+//
+//        boolean isPwMatch = passwordEncoder.matches(pw, hashedPw);
+//
+//        if (!isPwMatch) {
+//            return ResponseDTO.setFailed("암호화에 실패했어요");
+//        }
+//
+//        member.setPw(hashedPw);
 
         // MemberRepository를 통해 DB에 엔티티 저장
         try {
@@ -65,29 +65,29 @@ public class AuthService {
     public ResponseDTO<SignInResponseDTO> signIn(SignInDTO dto) {
         String memberId = dto.getMemberId();
         String pw = dto.getPw();
-        Member member;
+//        Member member;
 
-        try {
-            // 아이디로 사용자 정보 갖고오기
-            member = memberRepository.findByMemberId(memberId).orElse(null);
-            if (member == null) {
-                return ResponseDTO.setFailed("입력한 아이디로 등록된 계정이 존재하지 않아요");
-            }
-
-            // 사용자가 입력한 비밀번호를 BCryptPasswordEncoder로 암호화
-            BCryptPasswordEncoder pwEncoder = new BCryptPasswordEncoder();
-            String encodedPw = member.getPw();
-
-            // <저장된 암호화된 비번>과 <입력된 암호화된 비번> 비교
-            if (!pwEncoder.matches(pw, encodedPw)) {
-                return ResponseDTO.setFailed("비밀번호가 일치하지 않아요");
-            }
-        } catch (Exception e) {
-            return ResponseDTO.setFailed("DB 연결에 실패했어요");
-        }
-
-        // 클라이언트에 비번 제공 방지
-        member.setPw("");
+//        try {
+//            // 아이디로 사용자 정보 갖고오기
+//            member = memberRepository.findByMemberId(memberId).orElse(null);
+//            if (member == null) {
+//                return ResponseDTO.setFailed("입력한 아이디로 등록된 계정이 존재하지 않아요");
+//            }
+//
+//            // 사용자가 입력한 비밀번호를 BCryptPasswordEncoder로 암호화
+//            BCryptPasswordEncoder pwEncoder = new BCryptPasswordEncoder();
+//            String encodedPw = member.getPw();
+//
+//            // <저장된 암호화된 비번>과 <입력된 암호화된 비번> 비교
+//            if (!pwEncoder.matches(pw, encodedPw)) {
+//                return ResponseDTO.setFailed("비밀번호가 일치하지 않아요");
+//            }
+//        } catch (Exception e) {
+//            return ResponseDTO.setFailed("DB 연결에 실패했어요");
+//        }
+//
+//        // 클라이언트에 비번 제공 방지
+//        member.setPw("");
 
         try {
             // 아이디 비번이 맞는지
@@ -101,7 +101,7 @@ public class AuthService {
             return ResponseDTO.setFailed("DB 연결에 실패했어요");
         }
 
-        Member memberEntity = null;
+        Member member = null;
 
         try {
             member = memberRepository.findByMemberId(memberId).get();
@@ -136,7 +136,7 @@ public class AuthService {
     //회원 가입
 //    @Transactional
     public void joinMember(SignUpDTO dto) {
-        Member member = Member.builder() // builder를 통해 entity화 함
+        Member member = Member.builder()
                 .memberId(dto.getMemberId())
                 .pw(dto.getPw())
                 .email(dto.getEmail())
@@ -145,9 +145,9 @@ public class AuthService {
                 .gender(dto.getGender())
                 .mbti(dto.getMbti())
                 .build();
-        if (dto.getPw() == null) {
-            throw new IllegalStateException("비밀번호 필수");
-        }
+//        if (dto.getPw() == null) {
+//            throw new IllegalStateException("비밀번호 필수");
+//        }
         memberRepository.save(member);
     }
 }
