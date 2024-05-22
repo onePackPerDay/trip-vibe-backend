@@ -1,6 +1,7 @@
 package tripvibe.tripvibebe.controller;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,7 +15,7 @@ import tripvibe.tripvibebe.service.MemberService;
 import java.util.Optional;
 
 
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequiredArgsConstructor
 public class MemberController {
@@ -35,25 +36,33 @@ public class MemberController {
 //        System.out.println("auth : " + auth);
 //        System.out.println("auth.getName() : " + auth.getName());
 //        System.out.println("auth.isAuthenticated() : " + auth.isAuthenticated());
-
-        boolean 유저권한 = auth.getAuthorities().contains(new SimpleGrantedAuthority("유저"));
-        System.out.println(유저권한);
+//
+//        boolean 유저권한 = auth.getAuthorities().contains(new SimpleGrantedAuthority("유저"));
+//        System.out.println(유저권한);
 
         return memberService.getMemberOne(id);
     }
 
     // 회원가입
-    @PostMapping("/tripvibe/signup")
-    public void joinMember(@RequestBody MemberDTO dto) {
-        memberService.joinMember(dto);
-    }
+    // 테스트때문에 주석
+//    @PostMapping("/tripvibe/signup")
+//    public void joinMember(@RequestBody MemberDTO dto) {
+//        memberService.joinMember(dto);
+//    }
 
     // 로그인
-    @GetMapping("/tripvibe/signin")
-    public void loginTest() { // loginTest -> ??? 바꿔야함
-        Optional<Member> member = memberRepository.findByMemberId("moon11"); // 테스트 추후 삭제
-        System.out.println("아이디 정보떠야함 제발 : " + member.get().getMemberId()); // 테스트 추후 삭제
-    }
+    // 테스트때문에 주석
+//    @GetMapping("/tripvibe/signin")
+//    public void loginTest() { // loginTest -> ??? 바꿔야함
+//        Optional<Member> member = memberRepository.findByMemberId("moon11"); // 테스트 추후 삭제
+//        System.out.println("아이디 정보떠야함 제발 : " + member.get().getMemberId()); // 테스트 추후 삭제
+//    }
+
+//    @RequestMapping("/")
+//    @GetMapping
+//    public String test() {
+//        return "성공";
+//    }
 
 
     /**
