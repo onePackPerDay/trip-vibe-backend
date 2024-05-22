@@ -47,6 +47,7 @@ public class MyMemberDetailsService implements UserDetailsService {
         // User : Spring Security 구현체임
         // params : 유저아이디(memberId), 비번(pw), 권한정보
         return new User(getMember.getMemberId(), getMember.getPw(),authorities);
+        // 이 return문이 Authentication안에 들어감
     }
 }
 
