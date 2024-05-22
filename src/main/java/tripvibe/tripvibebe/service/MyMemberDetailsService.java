@@ -31,6 +31,9 @@ public class MyMemberDetailsService implements UserDetailsService {
 
         Optional<Member> member = memberRepository.findByMemberId(username);
 
+        //==jwt 추가==//
+//        Member member1 = member.orElseThrow(() -> new UsernameNotFoundException("해당 유저가 존재하지 않음. username: " + username));
+
         // 아이디가 DB에 없을 때
         if (member.isEmpty()) {
             throw new UsernameNotFoundException("아이디나 비밀번호가 잘못되었어요"); // 사실 아이디만 잘못된거임
