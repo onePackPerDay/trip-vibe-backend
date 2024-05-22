@@ -2,6 +2,8 @@ package tripvibe.tripvibebe.controller;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import tripvibe.tripvibebe.domain.Member;
@@ -29,7 +31,14 @@ public class MemberController {
 
     //회원 1명 조회 (고유 번호로 마이페이지 불러오기)
     @GetMapping("/tripvibe/mypage/{id}")
-    public MemberDTO getMemberOne(@PathVariable Long id) {
+    public MemberDTO getMemberOne(@PathVariable Long id, Authentication auth) {
+//        System.out.println("auth : " + auth);
+//        System.out.println("auth.getName() : " + auth.getName());
+//        System.out.println("auth.isAuthenticated() : " + auth.isAuthenticated());
+
+        boolean 유저권한 = auth.getAuthorities().contains(new SimpleGrantedAuthority("유저"));
+        System.out.println(유저권한);
+
         return memberService.getMemberOne(id);
     }
 
@@ -39,6 +48,7 @@ public class MemberController {
         memberService.joinMember(dto);
     }
 
+    // 로그인
     @GetMapping("/tripvibe/signin")
     public void loginTest() { // loginTest -> ??? 바꿔야함
         Optional<Member> member = memberRepository.findByMemberId("moon11"); // 테스트 추후 삭제
