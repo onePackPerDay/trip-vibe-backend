@@ -2,6 +2,7 @@ package tripvibe.tripvibebe.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import tripvibe.tripvibebe.dto.SignUpDTO;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -45,21 +46,19 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
 
+    private String token; //추가됨
 
-    // 새거
-//    public static Member createMember(MemberFormDTO memberFormDTO, PasswordEncoder passwordEncoder) {
-//        Member member = new Member();
-//
-//        member.setMemberId(memberFormDTO.getMemberId());
-//        member.setPw(passwordEncoder.encode(memberFormDTO.getPw()));
-//        member.setEmail(memberFormDTO.getEmail());
-//        member.setPhone(memberFormDTO.getPhone());
-//        member.setBirth(memberFormDTO.getBirth());
-//        member.setGender(memberFormDTO.getGender());
-//        member.setMbti(memberFormDTO.getMbti());
-//
-//        return member;
-//    }
+
+    public Member(SignUpDTO dto) {
+        this.id = dto.getId();
+        this.memberId = dto.getMemberId();
+        this.pw = dto.getPw();
+        this.email = dto.getEmail();
+        this.phone = dto.getPhone();
+        this.birth = dto.getBirth();
+        this.gender = dto.getGender();
+        this.mbti = dto.getMbti();
+    }
 
 
 }
