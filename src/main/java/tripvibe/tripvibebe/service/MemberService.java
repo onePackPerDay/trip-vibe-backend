@@ -2,16 +2,14 @@ package tripvibe.tripvibebe.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 import tripvibe.tripvibebe.domain.Member;
+import tripvibe.tripvibebe.dto.LoginDTO;
 import tripvibe.tripvibebe.dto.MemberDTO;
 import tripvibe.tripvibebe.repository.MemberRepository;
 
-import java.io.File;
-import java.util.UUID;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -43,19 +41,6 @@ public class MemberService{
         return new MemberDTO(member);
     }
 
-
-    @Transactional
-    public MemberDTO signIn(String memberId, String pw) {
-        // 데이터베이스에서 memberId를 가진 사용자 찾기
-        Member member = memberRepository.findByMemberId(memberId);
-
-        // 사용자가 존재하고 비밀번호가 일치하는지 확인
-        if (member != null && member.getPw().equals(pw)) {
-            return new MemberDTO(member);
-        }
-        return null;
-    }
-
     //회원 가입
     @Transactional
     public void joinMember(MemberDTO dto) {
@@ -74,5 +59,16 @@ public class MemberService{
         memberRepository.save(member);
     }
 
+    @Transactional
+    public MemberDTO signIn(LoginDTO dto) {
+        // 데이터베이스에서 memberId를 가진 사용자 찾기
+        Member member = memberRepository.findByMemberId(dto.getMemberId());
+
+        // 사용자가 존재하고 비밀번호가 일치하는지 확인
+        if (member != null && member.getPw().equals(dto.getPw())) {
+            return new MemberDTO(member);
+        }
+        return null;
+    }
 
 }

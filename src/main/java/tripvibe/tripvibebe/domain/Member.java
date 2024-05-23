@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Member {
@@ -44,22 +44,6 @@ public class Member {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
-
-
-    // 새거
-//    public static Member createMember(MemberFormDTO memberFormDTO, PasswordEncoder passwordEncoder) {
-//        Member member = new Member();
-//
-//        member.setMemberId(memberFormDTO.getMemberId());
-//        member.setPw(passwordEncoder.encode(memberFormDTO.getPw()));
-//        member.setEmail(memberFormDTO.getEmail());
-//        member.setPhone(memberFormDTO.getPhone());
-//        member.setBirth(memberFormDTO.getBirth());
-//        member.setGender(memberFormDTO.getGender());
-//        member.setMbti(memberFormDTO.getMbti());
-//
-//        return member;
-//    }
 
 
 }
