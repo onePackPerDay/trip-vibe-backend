@@ -21,12 +21,7 @@ public class MemberController {
 
     //회원 정보 수정(고유 번호로 회원 정보 불러오기) 엔드포인트
     @PutMapping("/tripvibe/mypage/edit/{id}")
-<<<<<<< HEAD
-    public void updateMember(@PathVariable Long id, @RequestParam MultipartFile img,
-                             @RequestParam("member") String stringMember) throws Exception {
-=======
     public void updateMember(@PathVariable Long id, @RequestParam MultipartFile img, @RequestParam("member") String stringMember) throws Exception {
->>>>>>> f458d91d0184f040174e97474d69457af2cb632a
         memberService.updateMember(id, img, stringMember);
     }
 
@@ -48,11 +43,16 @@ public class MemberController {
         }
     }
 
+
+
+
     // 회원가입
     @PostMapping("/tripvibe/signup")
     public void joinMember(@RequestBody MemberDTO dto) {
         memberService.joinMember(dto);
     }
+
+
 
     //로그인
     @PostMapping("/tripvibe/login")
@@ -97,4 +97,22 @@ public class MemberController {
             return response;
         }
     }
+
+    // 회원 탈퇴
+    @DeleteMapping("/tripvibe/mypage/delete/{id}")
+    public void deleteMember(@PathVariable Long id, HttpSession session) {
+        // 현재 로그인한 회원의 정보를 가져옴
+        MemberDTO loginMember = (MemberDTO) session.getAttribute("member");
+
+        // 만약 현재 로그인한 회원의 ID와 삭제하려는 회원의 ID가 일치한다면 탈퇴 처리
+        if (loginMember != null && loginMember.getId().equals(id)) {
+            memberService.deleteMember(id);
+            session.invalidate();
+        } else {
+            throw new IllegalStateException("잘못된 접근입니다.");
+        }
+    }
+
+
+
 }
