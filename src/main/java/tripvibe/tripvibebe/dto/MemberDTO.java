@@ -28,6 +28,8 @@ public class MemberDTO {
 
     private String mbti;
 
+    private String imgName;
+
 
     public MemberDTO(Member member) {
         this.id = member.getId();
@@ -38,6 +40,7 @@ public class MemberDTO {
         this.birth = member.getBirth();
         this.gender = member.getGender();
         this.mbti = member.getMbti();
+        this.imgName = member.getImgName();
     }
 
 

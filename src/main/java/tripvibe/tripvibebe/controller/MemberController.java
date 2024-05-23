@@ -21,8 +21,12 @@ public class MemberController {
 
     //회원 정보 수정(고유 번호로 회원 정보 불러오기) 엔드포인트
     @PutMapping("/tripvibe/mypage/edit/{id}")
+<<<<<<< HEAD
     public void updateMember(@PathVariable Long id, @RequestParam MultipartFile img,
                              @RequestParam("member") String stringMember) throws Exception {
+=======
+    public void updateMember(@PathVariable Long id, @RequestParam MultipartFile img, @RequestParam("member") String stringMember) throws Exception {
+>>>>>>> f458d91d0184f040174e97474d69457af2cb632a
         memberService.updateMember(id, img, stringMember);
     }
 

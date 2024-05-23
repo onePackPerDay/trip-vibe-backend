@@ -6,11 +6,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import tripvibe.tripvibebe.domain.Member;
+import tripvibe.tripvibebe.domain.Review;
 import tripvibe.tripvibebe.dto.LoginDTO;
 import tripvibe.tripvibebe.dto.MemberDTO;
+import tripvibe.tripvibebe.dto.ReviewDTO;
 import tripvibe.tripvibebe.repository.MemberRepository;
 
 import java.io.File;
+<<<<<<< HEAD
+=======
+import java.util.Optional;
+>>>>>>> f458d91d0184f040174e97474d69457af2cb632a
 import java.util.UUID;
 
 @Service
@@ -23,11 +29,18 @@ public class MemberService{
     //회원 정보 수정
     @Transactional
     public void updateMember(Long id, MultipartFile img, String stringMember) throws Exception {
+<<<<<<< HEAD
 
         //1. 전달받은 id에 맞는 review가 있는 지 확인
+=======
+        //1. 전달받은 id에 맞는 member가 있는 지 확인
+>>>>>>> f458d91d0184f040174e97474d69457af2cb632a
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+
+        //2. 전달받은 문자열 Json을 MemberDTO 객체로 매핑
         MemberDTO dto = new ObjectMapper().readValue(stringMember, MemberDTO.class);
 
+<<<<<<< HEAD
         //sfsdfsf.txt
         String path = "C:/fullstack/image/"; //이미지를 저장할 서버 주소
         String originalImgName = img.getOriginalFilename(); //파일 원본 이름
@@ -38,12 +51,22 @@ public class MemberService{
         member.setImgName(newImgName);
         memberRepository.save(member);
 
+=======
+        //3. 새 이미지 서버에 저장
+        String path = "C:/fullstack/image/";
+        String originalImgName = img.getOriginalFilename(); //파일 원본 이름
+        String extension = originalImgName.substring(originalImgName.indexOf(".")); //확장자
+        String newImgName = UUID.randomUUID().toString() + extension; //서버에 저장할 새 파일 이름
+        img.transferTo(new File(path+newImgName)); //지정된 경로를 가진 File 객체 생성
+
+        //4. member수정
+        member.setImgName(newImgName);
+>>>>>>> f458d91d0184f040174e97474d69457af2cb632a
         member.setPw(dto.getPw());
         member.setEmail(dto.getEmail());
         member.setPhone(dto.getPhone());
-        member.setGender(dto.getGender());
         member.setMbti(dto.getMbti());
-
+        member.setGender(dto.getGender());
     }
 
     //회원 1명 조회
