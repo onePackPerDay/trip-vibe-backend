@@ -16,7 +16,8 @@ public class WebConfig implements WebMvcConfigurer { //react 연동을 위한 co
         registry.addMapping("/**") //서버에 온 모든 경로 허용
                 .allowedOrigins("http://localhost:3000") //어떤 도메인에서 요청을 보내도 ok
                 .allowCredentials(true)
-                .allowedMethods("GET", "POST", "PUT", "DELETE");
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedHeaders("*"); // 추가
     }
 
     @Override
