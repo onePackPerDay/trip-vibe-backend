@@ -33,12 +33,6 @@ public class MemberController {
     //회원 1명 조회 (고유 번호로 마이페이지 불러오기)
     @GetMapping("/tripvibe/mypage/{id}")
     public MemberDTO getMemberOne(@PathVariable Long id, Authentication auth) {
-//        System.out.println("auth : " + auth);
-//        System.out.println("auth.getName() : " + auth.getName());
-//        System.out.println("auth.isAuthenticated() : " + auth.isAuthenticated());
-//
-//        boolean 유저권한 = auth.getAuthorities().contains(new SimpleGrantedAuthority("유저"));
-//        System.out.println(유저권한);
 
         return memberService.getMemberOne(id);
     }

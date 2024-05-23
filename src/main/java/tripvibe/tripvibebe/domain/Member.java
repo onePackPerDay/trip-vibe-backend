@@ -46,7 +46,7 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
 
-//    private String token; //추가됨
+    private String token; //추가됨
     
 
 
@@ -59,6 +59,7 @@ public class Member {
         this.birth = dto.getBirth();
         this.gender = dto.getGender();
         this.mbti = dto.getMbti();
+        this.token = dto.getToken();
     }
 
 
