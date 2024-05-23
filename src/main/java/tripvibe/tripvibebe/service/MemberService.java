@@ -4,12 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import tripvibe.tripvibebe.domain.Member;
 import tripvibe.tripvibebe.dto.LoginDTO;
 import tripvibe.tripvibebe.dto.MemberDTO;
 import tripvibe.tripvibebe.repository.MemberRepository;
 
-import java.util.Optional;
+import java.io.File;
+import java.util.UUID;
 
 @Service
 @Transactional(readOnly = true)
@@ -20,11 +22,21 @@ public class MemberService{
 
     //회원 정보 수정
     @Transactional
-    public void updateMember(Long id, String stringMember) throws Exception {
+    public void updateMember(Long id, MultipartFile img, String stringMember) throws Exception {
 
         //1. 전달받은 id에 맞는 review가 있는 지 확인
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         MemberDTO dto = new ObjectMapper().readValue(stringMember, MemberDTO.class);
+
+        //sfsdfsf.txt
+        String path = "C:/fullstack/image/"; //이미지를 저장할 서버 주소
+        String originalImgName = img.getOriginalFilename(); //파일 원본 이름
+        String extension = originalImgName.substring(originalImgName.indexOf(".")); //확장자
+        String newImgName = UUID.randomUUID().toString() + extension; //서버에 저장할 새 파일 이름
+        img.transferTo(new File(path+newImgName)); //지정된 경로를 가진 File 객체 생성하고 서버에 업로드
+
+        member.setImgName(newImgName);
+        memberRepository.save(member);
 
         member.setPw(dto.getPw());
         member.setEmail(dto.getEmail());
