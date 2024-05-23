@@ -20,6 +20,12 @@ public class ReviewController {
         return reviewService.getReviewList();
     }
 
+    //사용자가 쓴 리뷰 목록 조회
+    @GetMapping("/tripvibe/myreviewlist/{id}")
+    public List<ReviewDTO> getMyReviewList(@PathVariable Long id) {
+        return reviewService.getMyReviewList(id);
+    }
+
     //리뷰 1개 조회
     @GetMapping("/tripvibe/review/detail/{id}")
     public ReviewDTO getReviewOne(@PathVariable Long id){

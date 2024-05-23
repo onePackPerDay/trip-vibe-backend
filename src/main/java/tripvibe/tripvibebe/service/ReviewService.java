@@ -36,6 +36,15 @@ public class ReviewService {
                 .collect(Collectors.toList());
     }
 
+    //내가 쓴 리뷰 목록
+    @Transactional(readOnly = true)
+    public List<ReviewDTO> getMyReviewList(Long id) {
+        return reviewRepository.findAllByMemberId(id)
+                .stream()
+                .map(review -> new ReviewDTO(review))
+                .collect(Collectors.toList());
+    }
+
     //리뷰 1개 조회
     @Transactional(readOnly = true)
     public ReviewDTO getReviewOne(Long id){

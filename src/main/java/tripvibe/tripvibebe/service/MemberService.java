@@ -13,7 +13,6 @@ import tripvibe.tripvibebe.dto.ReviewDTO;
 import tripvibe.tripvibebe.repository.MemberRepository;
 
 import java.io.File;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -66,6 +65,7 @@ public class MemberService{
                 .birth(dto.getBirth())
                 .gender(dto.getGender())
                 .mbti(dto.getMbti())
+                .imgName("unnamed.jpg")
                 .build();
         if (dto.getPw() == null) {
             throw new IllegalStateException("비밀번호 필수");
