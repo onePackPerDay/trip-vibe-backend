@@ -2,7 +2,6 @@ package tripvibe.tripvibebe.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import tripvibe.tripvibebe.dto.SignUpDTO;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -47,20 +46,7 @@ public class Member {
     private List<Review> reviews = new ArrayList<>();
 
     private String token; //추가됨
-    
 
-
-    public Member(SignUpDTO dto) {
-        this.id = dto.getId();
-        this.memberId = dto.getMemberId();
-        this.pw = dto.getPw();
-        this.email = dto.getEmail();
-        this.phone = dto.getPhone();
-        this.birth = dto.getBirth();
-        this.gender = dto.getGender();
-        this.mbti = dto.getMbti();
-        this.token = dto.getToken();
-    }
 
 
 }
