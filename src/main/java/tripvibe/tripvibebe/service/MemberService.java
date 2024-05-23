@@ -1,13 +1,17 @@
 package tripvibe.tripvibebe.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import tripvibe.tripvibebe.domain.Member;
 import tripvibe.tripvibebe.dto.MemberDTO;
 import tripvibe.tripvibebe.repository.MemberRepository;
 
-import java.util.Optional;
+import java.io.File;
+import java.util.UUID;
 
 @Service
 @Transactional(readOnly = true)
@@ -17,27 +21,19 @@ public class MemberService{
     private final MemberRepository memberRepository;
 
     //회원 정보 수정
-    @Transactional(readOnly = false)
-    public void updateMember(Long id, MemberDTO dto) {//member_id로 조회
-        //1. 회원 존재 여부 체크 (고유 번호로 검사)
-        Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    @Transactional
+    public void updateMember(Long id, String stringMember) throws Exception {
 
-        //2. 정보 수정 (비밀번호, 이메일, 폰번호, mbti)
-        if(dto.getPw() != null){
-            member.setPw(dto.getPw());
-        }
-        if (dto.getEmail() != null){
-            member.setEmail(dto.getEmail());
-        }
-        if (dto.getPhone() != null){
-            member.setPhone(dto.getPhone());
-        }
-        if (dto.getGender() != null){
-            member.setGender(dto.getGender());
-        }
-        if (dto.getMbti() != null){
-            member.setMbti(dto.getMbti());
-        }
+        //1. 전달받은 id에 맞는 review가 있는 지 확인
+        Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        MemberDTO dto = new ObjectMapper().readValue(stringMember, MemberDTO.class);
+
+        member.setPw(dto.getPw());
+        member.setEmail(dto.getEmail());
+        member.setPhone(dto.getPhone());
+        member.setGender(dto.getGender());
+        member.setMbti(dto.getMbti());
+
     }
 
     //회원 1명 조회
@@ -45,6 +41,19 @@ public class MemberService{
     public MemberDTO getMemberOne(Long id) { //고유 번호로 조회
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         return new MemberDTO(member);
+    }
+
+
+    @Transactional
+    public MemberDTO signIn(String memberId, String pw) {
+        // 데이터베이스에서 memberId를 가진 사용자 찾기
+        Member member = memberRepository.findByMemberId(memberId);
+
+        // 사용자가 존재하고 비밀번호가 일치하는지 확인
+        if (member != null && member.getPw().equals(pw)) {
+            return new MemberDTO(member);
+        }
+        return null;
     }
 
     //회원 가입
