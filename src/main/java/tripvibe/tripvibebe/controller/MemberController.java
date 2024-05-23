@@ -3,6 +3,7 @@ package tripvibe.tripvibebe.controller;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import tripvibe.tripvibebe.dto.LoginDTO;
 import tripvibe.tripvibebe.dto.MemberDTO;
 import tripvibe.tripvibebe.service.MemberService;
@@ -20,8 +21,8 @@ public class MemberController {
 
     //회원 정보 수정(고유 번호로 회원 정보 불러오기) 엔드포인트
     @PutMapping("/tripvibe/mypage/edit/{id}")
-    public void updateMember(@PathVariable Long id, @RequestParam("member") String stringMember) throws Exception {
-        memberService.updateMember(id, stringMember);
+    public void updateMember(@PathVariable Long id, @RequestParam MultipartFile img, @RequestParam("member") String stringMember) throws Exception {
+        memberService.updateMember(id, img, stringMember);
     }
 
     //회원 1명 조회 (고유 번호로 마이페이지 불러오기)
