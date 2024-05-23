@@ -1,7 +1,6 @@
 package tripvibe.tripvibebe.controller;
 
 import jakarta.servlet.http.HttpSession;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tripvibe.tripvibebe.dto.LoginDTO;
@@ -97,6 +96,4 @@ public class MemberController {
             return response;
         }
     }
-
-
 }

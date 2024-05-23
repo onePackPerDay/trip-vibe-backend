@@ -6,8 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import tripvibe.tripvibebe.domain.Member;
 import tripvibe.tripvibebe.domain.Review;
 import tripvibe.tripvibebe.dto.ReviewDTO;
+import tripvibe.tripvibebe.repository.MemberRepository;
 import tripvibe.tripvibebe.repository.ReviewRepository;
 
 import java.io.File;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
+    private final MemberRepository memberRepository;
 
     //리뷰 목록 (main)
     @Transactional(readOnly = true)
@@ -42,7 +45,9 @@ public class ReviewService {
 
     //리뷰 등록
     @Transactional
-    public void saveReview(MultipartFile img, String stringReview) throws Exception {
+    public void saveReview(Long id, MultipartFile img, String stringReview) throws Exception {
+
+        Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         Review review = new ObjectMapper().readValue(stringReview, Review.class); //Json 문자열을 Review에 매핑
 
         //sfsdfsf.txt
@@ -53,6 +58,7 @@ public class ReviewService {
         img.transferTo(new File(path+newImgName)); //지정된 경로를 가진 File 객체 생성하고 서버에 업로드
 
         review.setImgName(newImgName);
+        review.setMember(member);
         reviewRepository.save(review);
     }
 
