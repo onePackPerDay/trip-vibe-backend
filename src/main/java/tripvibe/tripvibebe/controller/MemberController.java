@@ -30,7 +30,7 @@ public class MemberController {
     public MemberDTO getMemberOne(@PathVariable Long id) {
         return memberService.getMemberOne(id);
     }
-    
+
 
     // 로그인 후 마이페이지 들어가면 로그인한 정보 나옴
     @GetMapping("/tripvibe/mypage")
