@@ -1,6 +1,5 @@
 package tripvibe.tripvibebe.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,9 +12,7 @@ import tripvibe.tripvibebe.repository.MemberRepository;
 import tripvibe.tripvibebe.repository.ReviewRepository;
 
 import java.io.File;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -36,7 +33,7 @@ public class ReviewService {
                 .collect(Collectors.toList());
     }
 
-    //내가 쓴 리뷰 목록
+    //사용자가 쓴 리뷰 목록 조회(mypage)
     @Transactional(readOnly = true)
     public List<ReviewDTO> getMyReviewList(Long id) {
         return reviewRepository.findAllByMemberId(id)
@@ -55,17 +52,20 @@ public class ReviewService {
     //리뷰 등록
     @Transactional
     public void saveReview(Long id, MultipartFile img, String stringReview) throws Exception {
-
+        //1. 전달받은 사용자 id에 맞는 member가 있는 지 확인
         Member member = memberRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-        Review review = new ObjectMapper().readValue(stringReview, Review.class); //Json 문자열을 Review에 매핑
 
-        //sfsdfsf.txt
+        //2. Json 문자열을 Review에 매핑
+        Review review = new ObjectMapper().readValue(stringReview, Review.class);
+
+        //3. 이미지 이름 변환 후 서버에 저장
         String path = "C:/fullstack/image/"; //이미지를 저장할 서버 주소
         String originalImgName = img.getOriginalFilename(); //파일 원본 이름
         String extension = originalImgName.substring(originalImgName.indexOf(".")); //확장자
         String newImgName = UUID.randomUUID().toString() + extension; //서버에 저장할 새 파일 이름
         img.transferTo(new File(path+newImgName)); //지정된 경로를 가진 File 객체 생성하고 서버에 업로드
 
+        //4. 이미지 이름만 저장, 리뷰 쓴 사용자 저장
         review.setImgName(newImgName);
         review.setMember(member);
         reviewRepository.save(review);
@@ -99,10 +99,7 @@ public class ReviewService {
     //리뷰 삭제
     @Transactional
     public void deleteReview(Long id){
-        //1. id에 맞는 리뷰 데이터 찾기 (없으면 에러)
         Review review = reviewRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-
-        //2. 리뷰 삭제
         reviewRepository.delete(review);
     }
 

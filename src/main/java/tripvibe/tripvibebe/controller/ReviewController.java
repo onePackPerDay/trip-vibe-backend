@@ -20,15 +20,15 @@ public class ReviewController {
         return reviewService.getReviewList();
     }
 
-    //사용자가 쓴 리뷰 목록 조회
-    @GetMapping("/tripvibe/myreviewlist/{id}")
-    public List<ReviewDTO> getMyReviewList(@PathVariable Long id) {
+    //사용자가 쓴 리뷰 목록 조회(mypage)
+    @GetMapping("/tripvibe/myreviewlist")
+    public List<ReviewDTO> getMyReviewList(@RequestParam Long id) {
         return reviewService.getMyReviewList(id);
     }
 
-    //리뷰 1개 조회
-    @GetMapping("/tripvibe/review/detail/{id}")
-    public ReviewDTO getReviewOne(@PathVariable Long id){
+    //리뷰 상세 조회
+    @GetMapping("/tripvibe/review/detail")
+    public ReviewDTO getReviewOne(@RequestParam Long id){
         return reviewService.getReviewOne(id);
     }
 
@@ -39,14 +39,14 @@ public class ReviewController {
     }
 
     //리뷰 수정
-    @PutMapping("/tripvibe/review/detail/{id}")
-    public void updateReview(@PathVariable Long id, @RequestParam MultipartFile img, @RequestParam("review") String stringReview) throws Exception {
+    @PutMapping("/tripvibe/review/detail")
+    public void updateReview(@RequestParam Long id, @RequestParam MultipartFile img, @RequestParam("review") String stringReview) throws Exception {
        reviewService.updateReview(id, img, stringReview);
     }
 
     //리뷰 삭제
-    @DeleteMapping("/tripvibe/review/{id}")
-    public void deleteReview(@PathVariable Long id) {
+    @DeleteMapping("/tripvibe/review")
+    public void deleteReview(@RequestParam Long id) {
         reviewService.deleteReview(id);
     }
 

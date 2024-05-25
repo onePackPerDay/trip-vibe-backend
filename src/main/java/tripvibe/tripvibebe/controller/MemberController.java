@@ -11,7 +11,6 @@ import tripvibe.tripvibebe.service.MemberService;
 import java.util.HashMap;
 import java.util.Map;
 
-
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequiredArgsConstructor
@@ -19,43 +18,14 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    //회원 정보 수정(고유 번호로 회원 정보 불러오기) 엔드포인트
-    @PutMapping("/tripvibe/mypage/edit/{id}")
-    public void updateMember(@PathVariable Long id, @RequestParam MultipartFile img, @RequestParam("member") String stringMember) throws Exception {
-        memberService.updateMember(id, img, stringMember);
-    }
-
-    //회원 1명 조회 (고유 번호로 마이페이지 불러오기)
-    @GetMapping("/tripvibe/mypage/{id}")
-    public MemberDTO getMemberOne(@PathVariable Long id) {
-        return memberService.getMemberOne(id);
-    }
-
-
-    // 로그인 후 마이페이지 들어가면 로그인한 정보 나옴
-    @GetMapping("/tripvibe/mypage")
-    public MemberDTO getMemberOne(HttpSession session) {
-        MemberDTO loginMember = (MemberDTO) session.getAttribute("member");
-        if (loginMember != null) {
-            return memberService.getMemberOne(loginMember.getId());
-        } else {
-            throw new IllegalStateException("접근불가");
-        }
-    }
-
-
-
-
     // 회원가입
     @PostMapping("/tripvibe/signup")
     public void joinMember(@RequestBody MemberDTO dto) {
         memberService.joinMember(dto);
     }
 
-
-
     //로그인
-    @PostMapping("/tripvibe/login")
+    @PostMapping("/tripvibe/signin")
     public Map<String, Object> signIn(@RequestBody LoginDTO dto, HttpSession session) {
         MemberDTO memberDTO = memberService.signIn(dto);
         Map<String, Object> response = new HashMap<>();
@@ -76,7 +46,7 @@ public class MemberController {
     }
 
     //로그아웃
-    @PostMapping("/tripvibe/logout")
+    @PostMapping("/tripvibe/signout")
     public void logout(HttpSession session) {
         System.out.println(session.getAttribute("member"));
         session.invalidate();
@@ -98,9 +68,28 @@ public class MemberController {
         }
     }
 
+    ////////////마이페이지/////////////
+
+    //회원 조회
+    @GetMapping("/tripvibe/mypage")
+    public MemberDTO getMemberOne(HttpSession session) {
+        MemberDTO loginMember = (MemberDTO) session.getAttribute("member");
+        if (loginMember != null) {
+            return memberService.getMemberOne(loginMember.getId());
+        } else {
+            throw new IllegalStateException("접근불가");
+        }
+    }
+
+    //회원 정보 수정
+    @PutMapping("/tripvibe/mypage")
+    public void updateMember(@RequestParam Long id, @RequestParam MultipartFile img, @RequestParam("member") String stringMember) throws Exception {
+        memberService.updateMember(id, img, stringMember);
+    }
+
     // 회원 탈퇴
-    @DeleteMapping("/tripvibe/mypage/delete/{id}")
-    public void deleteMember(@PathVariable Long id, HttpSession session) {
+    @DeleteMapping("/tripvibe/mypage")
+    public void deleteMember(@RequestParam Long id, HttpSession session) {
         // 현재 로그인한 회원의 정보를 가져옴
         MemberDTO loginMember = (MemberDTO) session.getAttribute("member");
 
@@ -112,7 +101,5 @@ public class MemberController {
             throw new IllegalStateException("잘못된 접근입니다.");
         }
     }
-
-
 
 }
