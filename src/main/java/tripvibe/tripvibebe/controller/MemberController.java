@@ -30,25 +30,23 @@ public class MemberController {
         MemberDTO memberDTO = memberService.signIn(dto);
         Map<String, Object> response = new HashMap<>();
 
-        if (memberDTO != null) {
+        if (memberDTO != null) { //로그인 성공
             session.setAttribute("member", memberDTO);
             response.put("status", "success");
             response.put("memberId", memberDTO.getId());
             System.out.println(session.getAttribute("member"));
-            return response;// 로그인 성공 시, 응답 코드 200과 함께 전송
-        } else {
+            return response;
+        } else { //로그인 실패
             response.put("status", "fail");
-            response.put("message", "Invalid credentials");
+            response.put("message", "로그인 실패!");
             System.out.println(session.getAttribute("member"));
-            return response; // 로그인 실패 시, 응답 코드 401과 함께 전송
+            return response;
         }
-
     }
 
     //로그아웃
     @PostMapping("/tripvibe/signout")
     public void logout(HttpSession session) {
-        System.out.println(session.getAttribute("member"));
         session.invalidate();
     }
 
@@ -57,7 +55,6 @@ public class MemberController {
     public Map<String, Object> checkSession(HttpSession session) {
         Map<String, Object> response = new HashMap<>();
         MemberDTO member = (MemberDTO) session.getAttribute("member");
-        System.out.println("checkSession==>"+member);
         if (member != null) { //로그인 상태
             response.put("memberInfo", member.getId());
             response.put("status", "success");

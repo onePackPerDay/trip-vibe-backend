@@ -41,13 +41,10 @@ public class MemberService{
         memberRepository.save(member);
     }
 
-    //로그인
+    //로그인 // DB에서 memberId를 가진 사용자 찾기 // 사용자가 존재하고 비밀번호가 일치하는지 확인
     @Transactional
     public MemberDTO signIn(LoginDTO dto) {
-        // 데이터베이스에서 memberId를 가진 사용자 찾기
         Member member = memberRepository.findByMemberId(dto.getMemberId());
-
-        // 사용자가 존재하고 비밀번호가 일치하는지 확인
         if (member != null && member.getPw().equals(dto.getPw())) {
             return new MemberDTO(member);
         }
